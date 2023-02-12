@@ -4,24 +4,27 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import connectDB from "./db/connect.js";
-import 'express-async-errors';
+import "express-async-errors";
 
 //routers
-import authRouter from './routes/authRoutes.js'
-import jobsRouter  from './routes/jobsRoute.js'
+import authRouter from "./routes/authRoutes.js";
+import jobsRouter from "./routes/jobsRoute.js";
 
 //middle ware
 import errorHandlerMiddleware from "./middleware/error-handler.js";
-import notFoundMiddleware from "./middleware/not-found.js";
+import notFoundMiddleware from "./middleware/not-found.js"; 
 
-app.use(express.json())
-
+app.use(express.json());
 app.get("/", (req, res) => {
-  res.send("Welcome");
+  res.json({msg:"Welcome"});
 });
 
-app.use('/api/v1/auth',authRouter);
-app.use('/api/v1/jobs',jobsRouter);
+app.get("/api/v1", (req, res) => {
+  res.json({msg:"Welcome"});
+});
+
+app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/jobs", jobsRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
@@ -37,4 +40,4 @@ const start = async () => {
     console.log(error);
   }
 };
- start();
+start();
